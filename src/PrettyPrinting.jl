@@ -43,10 +43,18 @@ function show_obj(io::IO, mi::MIME, obj)
    finish(S)
 end
 
+global _html_as_latex = Ref(true)
+
+html_as_latex(fl::Bool) = (_html_as_latex[] = fl)
+
 function show_obj(io::IO, mi::MIME"text/html", obj)
-   print(io, "\$")
-   show_obj(io, MIME("text/latex"), obj)
-   print(io, "\$")
+   if _html_as_latex[]
+      print(io, "\$")
+      show_obj(io, MIME("text/latex"), obj)
+      print(io, "\$")
+   else
+      show_obj(io, MIME("text/plain"), obj)
+   end
 end
 
 ################################################################################
