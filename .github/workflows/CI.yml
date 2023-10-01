@@ -7,6 +7,7 @@ on:
       - 'release-'
     tags: '*'
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   # group by workflow and ref; the last slightly strange component ensures that for pull
@@ -69,18 +70,3 @@ jobs:
       - name: "Upload coverage data to Codecov"
         continue-on-error: true
         uses: codecov/codecov-action@v3
-
-  docs:
-    name: Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: julia-actions/setup-julia@v1
-        with:
-          version: '1.9'
-      - uses: julia-actions/cache@v1
-      - uses: julia-actions/julia-buildpkg@v1
-      - uses: julia-actions/julia-docdeploy@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
