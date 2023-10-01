@@ -3,9 +3,10 @@ using AbstractAlgebra.RandomExtensions: RandomExtensions, make
 
 # initialize RNGs to a fixed initial state, to improve reproducibility
 # of this test suite.
-Random.seed!(42)
-const rng = MersenneTwister(42)
-
+const seedval = 22
+println("SEED $seedval")
+Random.seed!(seedval)
+const rng = MersenneTwister(seedval)
 
 # test if rand(rng, R, args...) gives reproducible results
 # also check that the Random API works as expected
